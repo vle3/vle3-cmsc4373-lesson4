@@ -6,3 +6,20 @@ export function info(title, body, closeModal) {
     Elements.modalInfobox.body.innerHTML = body;
     Elements.modalInfobox.modal.show();
 }
+
+export function disabledButton(button){
+    button.disabled = true;
+    const originalLabel = button.innerHTML;
+    button.innerHTML = 'Wait...';
+    return originalLabel;
+}
+
+export function enabledButton(button, label){
+    if(label) button.innerHTML = label;
+    button.disabled = false;
+}
+
+// from stackoverflow 
+export function sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

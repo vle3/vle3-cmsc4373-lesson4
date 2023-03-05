@@ -27,13 +27,13 @@
               data-bs-target="#modal-signin">Sign In</button>
           </li>
           <li class="nav-item">
-            <button class=" btn btn-outline-primary modal-postauth">Home</button>
+            <button id="menu-home" class=" btn btn-outline-primary modal-postauth">Home</button>
           </li>
           <li class="nav-item">
-            <button class=" btn btn-outline-primary modal-postauth">Users</button>
+            <button id="menu-users" class=" btn btn-outline-primary modal-postauth">Users</button>
           </li>
           <li class="nav-item">
-            <button class=" btn btn-outline-danger modal-postauth">Sign Out</button>
+            <button id="menu-signout" class=" btn btn-outline-danger modal-postauth">Sign Out</button>
           </li>
       </div>
     </div>
@@ -77,6 +77,40 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add New Product -->
+  <div class="modal fade" id="modal-add-product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modal-add-product-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modal-add-product-title">Add Product</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form-add-product" method="post">
+            <div>
+              <input type="text" name="name" required minlength="2" placeholder="product name">
+            </div>
+            <div>
+              <input type="number" name="price" required min="0" step="0.01" placeholder="price ($)">
+            </div>
+            <div>
+              Summary: <br> 
+              <textarea name="summary" required minlength="5"></textarea>
+            </div>
+            <div>
+              <img id="form-add-product-image-tag" height="200"  style="display: block;"> 
+              <input id="form-add-product-image-button" type="file" required>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-outline-primary">Add</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import * as CloudFunction from '../controller/cloud_functions.js'
 import * as Util from './util.js'
 import * as Constants from '../model/constants.js'
 import * as CloudStorage from '../controller/cloud_storage.js'
+import * as EditProcduct from '../controller/edit_product.js'
 
 let imageFile2Upload = null;
 
@@ -64,6 +65,26 @@ export async function home_page() {
     });
 
     Elements.root.innerHTML = html;
+
+    const forms = document.getElementsByClassName('form-edit-delete-product');
+    for (let i = 0; i < forms.length; i++) {
+        forms[i].addEventListener('submit', async e => {
+            e.preventDefault();
+            const buttons = e.target.getElementsByTagName('button');
+            const submitter = e.target.submitter;
+            if (submitter == 'EDIT') {
+                const label = Util.disabledButton(buttons[0]);
+                await EditProcduct.edit_product(e.target.docId.value);
+                Util.enabledButton(buttons[0], label);
+            } else if (submitter == 'DELETE') {
+                const label = Util.disabledButton(buttons[1]);
+                await EditProcduct.delete_product(e.target.docId.value, e.target.imageName.value);
+                Util.enabledButton(buttons[1], label);
+            } else {
+                console.log('No such submitter', submitter);
+            }
+        });
+    }
 }
 
 async function addNewProduct(e) {
@@ -97,11 +118,19 @@ async function addNewProduct(e) {
 
 function buildProductCard(product) {
     return `
-    <div class="card d-inline-flex" style="width: 18rem;">
-    <img src="${product.imageURL}" class="card-img-top">
+    <div id="card-${product.docId}" class="card d-inline-flex" style="width: 18rem;">
+        <img src="${product.imageURL}" class="card-img-top">
         <div class="card-body">
             <h5 class="card-title">${product.name}</h5>
             <p class="card-text">${product.price.toFixed(2)}<br>${product.summary}</p>
+            <form class="form-edit-delete-product" method="post">
+                <input type="hidden" name="docId" value="${product.docId}">
+                <input type="hidden" name="imageName" value="${product.imageName}">
+                <button type="submit" class="btn btn-outline-primary"
+                    onclick="this.form.submitter='EDIT'">Edit</button>
+                <button type="submit" class="btn btn-outline-danger"
+                    onclick="this.form.submitter='DELETE'">Delete</button>
+            </form>
         </div>
     </div>
     `;

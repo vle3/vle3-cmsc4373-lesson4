@@ -30,3 +30,8 @@ export async function getProductList(){
     });
     return products;
 }
+
+const cfn_deleteProductDoc = httpsCallable(functions, 'cfn_deleteProductDoc') ;
+export async function deleteProductDoc(docId) {
+    await cfn_deleteProductDoc(docId);
+}
